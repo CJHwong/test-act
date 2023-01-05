@@ -1,0 +1,10 @@
+name: File Audit
+on: pull-request
+
+jobs:
+  file-audit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Changed Files
+        uses: tj-actions/changed-files@v35.2.1
