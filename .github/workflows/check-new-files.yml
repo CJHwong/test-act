@@ -1,0 +1,23 @@
+name: Check New Files
+on: pull_request
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v35
+
+      - name: Auto Comment
+        uses: wow-actions/auto-comment@v1  
+        if: steps.changed-files.outputs.added_files != 0
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          pullRequestOpened: |
+            👋 You've added new files to the repository. Please ensure that the new files can help us progress modularization.
+            You may consult @CJHwong for proper naming and ideal folder structuring.
+          pullRequestSynchronize: |
+            👋 You've added new files to the repository. Please ensure that the new files can help us progress modularization.
+            You may consult @CJHwong for proper naming and ideal folder structuring.
