@@ -1,0 +1,28 @@
+name: Check New Files
+on: [issues, pull_request]
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v35
+
+      - name: List all changed files
+        run: |
+          echo ${{ steps.changed-files.outputs.added_files }}
+
+      - uses: wow-actions/auto-comment@v1
+        name: Auto Comment
+        if: steps.changed-files.outputs.added_files != 0
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          pullRequestOpened: |
+            👋 @{{ author }}
+            Thank you for raising your pull request.
+            Please make sure you have followed our contributing guidelines. We will review it as soon as possible
+
+          pullRequestReopened: |
+            Reopened
